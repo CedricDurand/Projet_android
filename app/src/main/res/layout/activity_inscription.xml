@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText android:id="@+id/input_pseudo"
+            <EditText android:id="@+id/pseudo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#F20"
@@ -52,7 +52,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText android:id="@+id/input_mdp"
+            <EditText android:id="@+id/mdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#F20"
@@ -66,24 +66,44 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Button
-                android:layout_width="fill_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_login"
-                android:text="@string/login"/>
-
+                android:text="@string/confirm_mdp"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
+            <EditText android:id="@+id/confirm_mdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#F20"
+                android:inputType="textPassword"
+                android:hint="@string/confirm_mdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="206dp"
+                android:layout_height="wrap_content"
+                android:text="@string/ok" />
+
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_inscription"
-                android:text="@string/inscription"/>
+                android:id="@+id/btn_annule"
+                android:text="@string/retour"/>
 
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pseudo"/>
+                android:text="@string/old_mdp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -28,11 +28,12 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText android:id="@+id/input_pseudo"
+            <EditText android:id="@+id/old_mdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#F20"
-                android:hint="@string/pseudo"/>
+                android:inputType="textPassword"
+                android:hint="@string/old_mdp"/>
 
         </LinearLayout>
 
@@ -44,7 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mdp"/>
+                android:text="@string/new_mdp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -52,12 +53,37 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText android:id="@+id/input_mdp"
+            <EditText android:id="@+id/new_mdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#F20"
                 android:inputType="textPassword"
-                android:hint="@string/mdp" />
+                android:hint="@string/new_mdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_mdp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText android:id="@+id/mdp_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#F20"
+                android:inputType="textPassword"
+                android:hint="@string/confirm_mdp" />
 
         </LinearLayout>
 
@@ -67,23 +93,18 @@
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="fill_parent"
+                android:id="@+id/btn_ok_change"
+                android:layout_width="206dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_login"
-                android:text="@string/login"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+                android:text="@string/ok" />
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_inscription"
-                android:text="@string/inscription"/>
+                android:id="@+id/btn_annule_change"
+                android:text="@string/retour"/>
 
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

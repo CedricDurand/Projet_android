@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button_login =  (Button) findViewById(R.id.btn_login);
+        Button button_login = findViewById(R.id.btn_login);
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String strThatDay = "2019/02/23";
+                String strThatDay = "2019/03/27";
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
                 Date d = null;
                 try {
@@ -76,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btn_inscription = findViewById(R.id.btn_inscription);
+        btn_inscription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Inscription.class);
+                startActivity(i);
+            }
+        });
 
 
 

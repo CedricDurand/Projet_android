@@ -1,6 +1,13 @@
 <resources>
-    <string name="app_name">Projet_android</string>
+    <string name="app_name">RAPACE</string>
     <string name="pseudo">Pseudo </string>
     <string name="mdp">Mot de passe </string>
+    <string name="inscription">Inscription </string>
     <string name="login">Login </string>
+    <string name="retour">Retour </string>
+    <string name="old_mdp">Ancien mot de passe </string>
+    <string name="new_mdp">Nouveau mot de passe </string>
+    <string name="confirm_mdp_new">Confirmer le nouveau mot de passe </string>
+    <string name="confirm_mdp">Confirmer le mot de passe </string>
+    <string name="ok">Ok</string>
 </resources>
