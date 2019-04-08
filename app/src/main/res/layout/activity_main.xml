@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mail"/>
+                android:text="@string/pseudo"/>
         </LinearLayout>
 
         <LinearLayout
@@ -28,12 +28,12 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText android:id="@+id/input_mail"
+            <EditText android:id="@+id/input_pseudo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#F20"
                 android:inputType="textEmailAddress"
-                android:hint="@string/mail"/>
+                android:hint="@string/pseudo"/>
 
         </LinearLayout>
 

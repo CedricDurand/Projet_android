@@ -40,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
                 long days = diff / (24 * 60 * 60 * 1000);
                 System.out.println("diff "+days);
 
-                if(days>10 || days <= 15 ){
+                if(days>10 && days <= 15 ){
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setCancelable(true);
                     builder.setTitle("Alerte");
                     builder.setMessage("Votre mot de passe va expirer ! Le changer ? ");
-                    builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                          @Override
                          public void onClick(DialogInterface dialog, int which) {
 
@@ -58,9 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
-
-
                 }else if(days > 15){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setCancelable(true);
+                    builder.setTitle("Alerte");
+                    builder.setMessage("Votre a expiré ! Changer le maintenant. ");
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }});
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
 
                 }
             }
