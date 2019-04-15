@@ -3,6 +3,7 @@
     <string name="pseudo">Pseudo </string>
     <string name="mdp">Mot de passe </string>
     <string name="inscription">Inscription </string>
+    <string name="visualisation">Visualisation </string>
     <string name="login">Login </string>
     <string name="retour">Retour </string>
     <string name="old_mdp">Ancien mot de passe </string>
@@ -10,4 +11,12 @@
     <string name="confirm_mdp_new">Confirmer le nouveau mot de passe </string>
     <string name="confirm_mdp">Confirmer le mot de passe </string>
     <string name="ok">Ok</string>
+    <string-array name="spinner_choice">
+        <item>Habitation</item>
+        <item>Commerce</item>
+        <item>Musee</item>
+        <item>Ecole</item>
+        <item>Entrepot</item>
+        <item>Institution publique</item>
+    </string-array>
 </resources>

@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Change_mdp"></activity>
+        <activity android:name=".CategorieLocal"></activity>
+        <activity android:name=".EnsembleLocaux" />
+        <activity android:name=".PageVisualisation" />
+        <activity android:name=".Change_mdp" />
         <activity android:name=".Inscription" />
         <activity android:name=".MainActivity">
             <intent-filter>

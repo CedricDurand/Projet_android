@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/all_locaux"
+        android:title="Ensemble des locaux"
+        app:showAsAction="never"></item>
+    <item android:id="@+id/visual_page"
+        android:title="Visualisation"
+        app:showAsAction="always"></item>
+    <item android:id="@+id/type_menu"
+        android:title="Par type"
+        app:showAsAction="never"></item>
+</menu>

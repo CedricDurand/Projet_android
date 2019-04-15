@@ -85,6 +85,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btn_visual = findViewById(R.id.btn_visualisation);
+        btn_visual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, PageVisualisation.class);
+                startActivity(i);
+            }
+        });
+
 
 
 
