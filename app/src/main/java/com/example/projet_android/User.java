@@ -14,6 +14,11 @@ public class User {
         alerte_mode=_alerte_mode;
     }
 
+    User(String _pseudo,String _mdp){
+        pseudo=_pseudo;
+        mdp=_mdp;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
