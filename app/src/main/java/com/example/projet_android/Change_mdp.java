@@ -1,12 +1,24 @@
 package com.example.projet_android;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Change_mdp extends AppCompatActivity {
 
@@ -25,23 +37,25 @@ public class Change_mdp extends AppCompatActivity {
                 TextView confirm_mdp_textView = findViewById(R.id.mdp_confirm);
                 String confirm_mdp = confirm_mdp_textView.getText().toString();
 
+                TextView old_mdp_textView = findViewById(R.id.old_mdp);
+                String old_mdp = old_mdp_textView.getText().toString();
+
+
                 if(new_mdp.length()<5){
                     Toast.makeText(Change_mdp.this, "Votre nouveau mot de passe doit faire plus de 5 charactères.", Toast.LENGTH_LONG).show();
                 }
+                else if (old_mdp.equals("")){
+                    Toast.makeText(Change_mdp.this, "Renseigner votre ancien mot de passe.", Toast.LENGTH_LONG).show();
+                }
                 else{
-                    System.out.println("FAIRE TEST AVEC ANCIEN MDP (Change_mdp)");
                     if(new_mdp.equals(confirm_mdp)){
-                        System.out.println("METTRE A JOUR LA DANS BDD (Change_mdp)");
-                        Intent i = new Intent(Change_mdp.this, MainActivity.class);
-                        startActivity(i);
-                        Toast.makeText(Change_mdp.this, "Modification réussi !", Toast.LENGTH_LONG).show();
+                        String pseudo = getIntent().getStringExtra("pseudo");
+                        new Change_mdpTask().execute(pseudo, old_mdp,confirm_mdp);
                     }else{
                         Toast.makeText(Change_mdp.this, "Mot de passe non identique !", Toast.LENGTH_LONG).show();
                     }
                 }
 
-                Intent i = new Intent(Change_mdp.this, MainActivity.class);
-                startActivity(i);
             }
         });
 
@@ -53,5 +67,65 @@ public class Change_mdp extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    class Change_mdpTask extends AsyncTask<String,Integer,String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String res = "";
+            try {
+                HttpClient httpClient=new DefaultHttpClient();
+                HttpPost httpPost=new HttpPost("http://10.0.2.2:8888/login");
+                httpPost.addHeader("Content-Type", "application/json");
+                String pseudo = strings[0];
+                String mdp = strings[1];
+                String new_mdp = strings[2];
+                StringEntity entity = null;
+                entity = new StringEntity("{\"pseudo\":\""+pseudo+"\",\"mdp\":\""+mdp+"\"}");
+
+                httpPost.setEntity(entity);
+                HttpResponse httpResponse=  httpClient.execute(httpPost);
+
+                res = EntityUtils.toString(httpResponse.getEntity());
+                if(res.toString().equals("\"Erreur\"")){
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Mauvaise information de connexion !", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else {
+                    Calendar today = Calendar.getInstance();
+                    today.add(Calendar.DATE, 0);
+                    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                    String date = format1.format(today.getTime());
+                    String url = "http://10.0.2.2:8888/updateUser/pseudo="+pseudo+"/mdp="+new_mdp+"/date="+date;
+                    HttpPut httpPut = new HttpPut(url);
+                    httpPut.addHeader("Content-Type", "application/json");
+                    httpResponse=  httpClient.execute(httpPut);
+                    res = EntityUtils.toString(httpResponse.getEntity());
+                    if(res.toString().equals("\"\nModification non réussie !\n\"")){
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(Change_mdp.this, "Problème serveur !", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    }else{
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Intent i = new Intent(Change_mdp.this, MainActivity.class);
+                                startActivity(i);
+                                Toast.makeText(Change_mdp.this, "Changement de mot de passe réussi !", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return res;
+        }
     }
 }

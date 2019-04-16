@@ -1,12 +1,24 @@
 package com.example.projet_android;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Inscription extends AppCompatActivity {
 
@@ -28,19 +40,12 @@ public class Inscription extends AppCompatActivity {
                 TextView pseudo = findViewById(R.id.pseudo);
                 String string_pseudo = pseudo.getText().toString();
 
-                if(string_pseudo.isEmpty()){
-                    Toast.makeText(Inscription.this, "Remplir le champs pseudo !", Toast.LENGTH_LONG).show();
-                }else if(string_pseudo.length()<6){
-                    Toast.makeText(Inscription.this, "Votre pseudo doit faire plus de 6 charactères.", Toast.LENGTH_LONG).show();
-                }else if(mdp.length()<5){
-                    Toast.makeText(Inscription.this, "Votre mot de passe doit faire plus de 5 charactères.", Toast.LENGTH_LONG).show();
+                if(string_pseudo.equals("") || mdp.equals("")) {
+                    Toast.makeText(Inscription.this, "Remplir tout les champs!", Toast.LENGTH_LONG).show();
                 }
                 else{
                     if(mdp.equals(confirm_mdp)){
-                        System.out.println("METTRE DANS BDD ( INSCRIPTION ) FAIRE LE TEST SI LE PSEUDO EXISTE DEJA");
-                        Intent i = new Intent(Inscription.this, MainActivity.class);
-                        startActivity(i);
-                        Toast.makeText(Inscription.this, "Inscription réussi !", Toast.LENGTH_LONG).show();
+                        new InscriptionTask().execute(string_pseudo, confirm_mdp);
                     }else{
                         Toast.makeText(Inscription.this, "Mot de passe non identique !", Toast.LENGTH_LONG).show();
                     }
@@ -57,5 +62,58 @@ public class Inscription extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    class InscriptionTask extends AsyncTask<String,Integer,String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            String res = "";
+            try{
+                HttpClient httpClient=new DefaultHttpClient();
+                HttpPost httpPost=new HttpPost("http://10.0.2.2:8888/addUser");
+                httpPost.addHeader("Content-Type", "application/json");
+                String pseudo = strings[0];
+                String mdp = strings[1];
+
+                Calendar today = Calendar.getInstance();
+                today.add(Calendar.DATE, 0);
+                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                String date = format1.format(today.getTime());
+                StringEntity  entity = new StringEntity("{\"pseudo\":\""+pseudo+"\",\"mdp\":\""+mdp+"\",\"date\":\""+date+"\",\"admin\":\"normal\",\"first_co\":0,\"alerte_mode\":0}");
+                httpPost.setEntity(entity);
+                HttpResponse httpResponse=  httpClient.execute(httpPost);
+                res = EntityUtils.toString(httpResponse.getEntity());
+                if(res.toString().equals("\"Inscription reussie\"")){
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Inscription réussi !", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(Inscription.this, MainActivity.class);
+                            startActivity(i);
+                        }
+                    });
+
+                }else {
+                    System.out.println(res.toString());
+                    if(res.toString().equals("\"Membre existe deja !\"")) {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Pseudo déjà utilisé !", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else{
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Erreur server !", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+
+            }catch (Exception e){
+                System.out.println(e);
+            }
+
+            return res;
+        }
     }
 }
