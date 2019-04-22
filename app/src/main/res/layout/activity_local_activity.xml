@@ -1,97 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/rapace"
-    android:baselineAligned="false">
+    android:layout_centerInParent="true">
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:baselineAligned="false">
+
+
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0"
-            android:orientation="horizontal">
-
-            <Switch
-                android:id="@+id/switchVorI"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/vid_o" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="0"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0"
-                android:text="@string/Categorie"
-                android:textColor="@android:color/background_dark" />
-
-            <TextView
-                android:id="@+id/cat"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:textColor="@android:color/background_dark" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="279dp"
-            android:layout_weight="0"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/imageOrVideo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center|center_horizontal|center_vertical"
-                android:text="@string/image"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="36sp" />
-        </LinearLayout>
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="255dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/adresse"
-                android:textColor="@android:color/background_dark" />
+                    <Switch
+                        android:id="@+id/switchVorI"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/vid_o" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/adresse"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd"
-                android:textColor="@android:color/background_dark" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="0"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:text="@string/Categorie"
+                        android:textColor="@android:color/background_dark" />
+
+                    <TextView
+                        android:id="@+id/cat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@android:color/background_dark" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="279dp"
+                    android:layout_weight="0"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/imageOrVideo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center|center_horizontal|center_vertical"
+                        android:text="@string/image"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="36sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="255dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/adresse"
+                        android:textColor="@android:color/background_dark" />
+
+                    <TextView
+                        android:id="@+id/adresse"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@android:color/background_dark" />
+                </LinearLayout>
+            </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
