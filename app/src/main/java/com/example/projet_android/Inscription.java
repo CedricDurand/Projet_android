@@ -86,7 +86,7 @@ public class Inscription extends AppCompatActivity {
                 if(res.toString().equals("\"Inscription reussie\"")){
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast.makeText(getApplicationContext(), "Inscription réussi !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Inscription reussi !", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(Inscription.this, MainActivity.class);
                             startActivity(i);
                         }

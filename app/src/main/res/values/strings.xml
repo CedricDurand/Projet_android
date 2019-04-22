@@ -11,6 +11,10 @@
     <string name="confirm_mdp_new">Confirmer le nouveau mot de passe </string>
     <string name="confirm_mdp">Confirmer le mot de passe </string>
     <string name="ok">Ok</string>
+    <string name="adresse">Adresse</string>
+    <string name="image">Image</string>
+    <string name="Categorie">Categorie</string>
+    <string name="vid_o">Vidéo</string>
     <string-array name="spinner_choice">
         <item>Habitation</item>
         <item>Commerce</item>

@@ -84,21 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     JSONArray  user = new JSONArray(res);
                     String strThatDay = user.getJSONObject(0).getString("date");
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-                    Date d = null;
-                    d = formatter.parse(strThatDay);//catch exception
-                    Calendar thatDay = Calendar.getInstance();
-                    thatDay.setTime(d);
-                    Calendar today = Calendar.getInstance();
-                    long diff = today.getTimeInMillis() - thatDay.getTimeInMillis();
-                    long days = diff / (24 * 60 * 60 * 1000);
-                    if(days>10 && days <= 15 ){
+                    String strFirstCo = user.getJSONObject(0).getString("first_co");
+                    if(strFirstCo.equals("0")){
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                 builder.setCancelable(true);
                                 builder.setTitle("Alerte");
-                                builder.setMessage("Votre mot de passe va expirer ! Le changer ? ");
+                                builder.setMessage("C'est votre première connexion ! Changer le mot de passe !");
                                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -108,50 +101,83 @@ public class MainActivity extends AppCompatActivity {
                                         i.putExtra("pseudo",pseudo);
                                         startActivity(i);
                                     }});
-                                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                });
                                 AlertDialog dialog = builder.create();
                                 dialog.show();
                             }
                         });
+                    }
+                    else {
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                        Date d = null;
+                        d = formatter.parse(strThatDay);//catch exception
+                        Calendar thatDay = Calendar.getInstance();
+                        thatDay.setTime(d);
+                        Calendar today = Calendar.getInstance();
+                        long diff = today.getTimeInMillis() - thatDay.getTimeInMillis();
+                        long days = diff / (24 * 60 * 60 * 1000);
+                        if (days > 10 && days <= 15) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Alerte");
+                                    builder.setMessage("Votre mot de passe va expirer ! Le changer ? ");
+                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            EditText pseudoEdit = (EditText) findViewById(R.id.input_pseudo);
+                                            String pseudo = pseudoEdit.getText().toString();
+                                            Intent i = new Intent(MainActivity.this, Change_mdp.class);
+                                            i.putExtra("pseudo", pseudo);
+                                            startActivity(i);
+                                        }
+                                    });
+                                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    });
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                }
+                            });
 
-                    }else if(days > 15){
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                builder.setCancelable(true);
-                                builder.setTitle("Alerte");
-                                builder.setMessage("Votre a expiré ! Changer le maintenant. ");
-                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        EditText pseudoEdit = (EditText) findViewById(R.id.input_pseudo);
-                                        String pseudo = pseudoEdit.getText().toString();
-                                        Intent i = new Intent(MainActivity.this, Change_mdp.class);
-                                        i.putExtra("pseudo",pseudo);
-                                        startActivity(i);
-                                    }});
+                        } else if (days > 15) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Alerte");
+                                    builder.setMessage("Votre a expiré ! Changer le maintenant. ");
+                                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            EditText pseudoEdit = (EditText) findViewById(R.id.input_pseudo);
+                                            String pseudo = pseudoEdit.getText().toString();
+                                            Intent i = new Intent(MainActivity.this, Change_mdp.class);
+                                            i.putExtra("pseudo", pseudo);
+                                            startActivity(i);
+                                        }
+                                    });
 
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                            }
-                        });
-                    }else{
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                }
+                            });
+                        } else {
 
-                        SharedPreferences settings = getSharedPreferences("CurrentUser", 0);
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString("currentUser",user.get(0).toString());
-                        editor.commit();
+                            SharedPreferences settings = getSharedPreferences("CurrentUser", 0);
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.putString("currentUser", user.get(0).toString());
+                            editor.commit();
 
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                Intent i = new Intent(MainActivity.this, PageVisualisation.class);
-                                startActivity(i);
-                            }
-                        });
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Intent i = new Intent(MainActivity.this, PageVisualisation.class);
+                                    startActivity(i);
+                                }
+                            });
+                        }
                     }
                 }
 

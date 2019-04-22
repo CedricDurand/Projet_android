@@ -35,9 +35,11 @@ public class EnsembleLocaux extends AppCompatActivity implements View.OnClickLis
         LocalAdapter.ViewHolder holder = (LocalAdapter.ViewHolder) vue.getTag();
         //this.getApp().getInventoryItems().add(new Item(holder.instance.getName(),holder.instance.getSellIn(),holder.instance.getQuality()));
 
-        String text = "Selection de "+holder.instance.getAdresse();
-        Toast toast = Toast.makeText(getBaseContext(),text,Toast.LENGTH_SHORT);
-        toast.show();
+        Intent i = new Intent(getApplicationContext(), local_activity.class);
+        i.putExtra("id",holder.instance.getId());
+        i.putExtra("cat",holder.instance.getCategorie());
+        i.putExtra("adr",holder.instance.getAdresse());
+        startActivity(i);
     }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.visual_menu, menu);

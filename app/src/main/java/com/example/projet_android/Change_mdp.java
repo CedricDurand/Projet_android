@@ -1,6 +1,7 @@
 package com.example.projet_android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,6 +46,10 @@ public class Change_mdp extends AppCompatActivity {
 
                 if(new_mdp.length()<5){
                     Toast.makeText(Change_mdp.this, "Votre nouveau mot de passe doit faire plus de 5 charactères.", Toast.LENGTH_LONG).show();
+                }
+                else if(new_mdp.equals(old_mdp))
+                {
+                    Toast.makeText(Change_mdp.this, "Donner un mot de passe non identique à l'ancien !", Toast.LENGTH_LONG).show();
                 }
                 else if (old_mdp.equals("")){
                     Toast.makeText(Change_mdp.this, "Renseigner votre ancien mot de passe.", Toast.LENGTH_LONG).show();
@@ -102,8 +109,8 @@ public class Change_mdp extends AppCompatActivity {
                     HttpPut httpPut = new HttpPut(url);
                     httpPut.addHeader("Content-Type", "application/json");
                     httpResponse=  httpClient.execute(httpPut);
-                    res = EntityUtils.toString(httpResponse.getEntity());
-                    if(res.toString().equals("\"\nModification non réussie !\n\"")){
+                    String res_autre = EntityUtils.toString(httpResponse.getEntity());
+                    if(res_autre.toString().equals("\"\nModification non reussie !\n\"")){
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(Change_mdp.this, "Problème serveur !", Toast.LENGTH_LONG).show();
@@ -111,13 +118,36 @@ public class Change_mdp extends AppCompatActivity {
                         });
 
                     }else{
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                Intent i = new Intent(Change_mdp.this, MainActivity.class);
-                                startActivity(i);
-                                Toast.makeText(Change_mdp.this, "Changement de mot de passe réussi !", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        JSONArray user = new JSONArray(res);
+                        String id  =  user.getJSONObject(0).getString("id");
+                        System.out.println(id);
+                        url = "http://10.0.2.2:8888/firstCo/id="+id;
+                        httpPut = new HttpPut(url);
+                        httpPut.addHeader("Content-Type", "application/json");
+                        httpResponse=  httpClient.execute(httpPut);
+                        res_autre = EntityUtils.toString(httpResponse.getEntity());
+                        if(res_autre.equals("\"\nModification non reussie !\n\"")){
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(Change_mdp.this, "Problème serveur !", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }else{
+                            JSONObject person= user.getJSONObject(0);
+                            person.put("first_co",1);
+                            SharedPreferences settings = getSharedPreferences("CurrentUser", 0);
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.putString("currentUser", person.toString());
+                            editor.commit();
+
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Intent i = new Intent(Change_mdp.this, PageVisualisation.class);
+                                    startActivity(i);
+                                    Toast.makeText(Change_mdp.this, "Changement de mot de passe reussi !", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
                     }
 
                 }
