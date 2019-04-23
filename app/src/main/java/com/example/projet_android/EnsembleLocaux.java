@@ -36,7 +36,7 @@ public class EnsembleLocaux extends AppCompatActivity implements View.OnClickLis
         //this.getApp().getInventoryItems().add(new Item(holder.instance.getName(),holder.instance.getSellIn(),holder.instance.getQuality()));
 
         Intent i = new Intent(getApplicationContext(), local_activity.class);
-        i.putExtra("id",holder.instance.getId());
+        i.putExtra("id",Integer.toString(holder.instance.getId()));
         i.putExtra("cat",holder.instance.getCategorie());
         i.putExtra("adr",holder.instance.getAdresse());
         startActivity(i);

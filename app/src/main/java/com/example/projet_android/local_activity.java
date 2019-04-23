@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 public class local_activity extends AppCompatActivity {
 
+    String id_local;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +22,7 @@ public class local_activity extends AppCompatActivity {
         String id = getIntent().getStringExtra("id");
         String cat = getIntent().getStringExtra("cat");
         String adr = getIntent().getStringExtra("adr");
-
+        id_local=id;
         TextView categorie = findViewById(R.id.cat);
         categorie.setText(cat);
         TextView adresse = findViewById(R.id.adresse);
@@ -50,8 +52,9 @@ public class local_activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.historique:
-               /* Intent i = new Intent(local_activity.this, EnsembleLocaux.class);
-                startActivity(i);*/
+                Intent i = new Intent(local_activity.this, liste_historique.class);
+                i.putExtra("id",id_local);
+                startActivity(i);
                 return true;
             case R.id.evenement:
                /* Intent ii = new Intent(local_activity.this, CategorieLocal.class);

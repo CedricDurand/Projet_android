@@ -11,6 +11,12 @@ public class Historique {
         date=_date;
     }
 
+    Historique(int _id_local, String _log, String _date){
+        id_local= _id_local;
+        log=_log;
+        date=_date;
+    }
+
     public int getId() {
         return id;
     }
