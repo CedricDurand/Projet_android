@@ -23,7 +23,11 @@ public class liste_historique extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_historique);
         String id = getIntent().getStringExtra("id");
-        new liste_historique.HistoriqueTask(this).execute(id);
+        String admin = "None";
+        if (getIntent().hasExtra("admin")) {
+            admin = getIntent().getStringExtra("admin");
+        }
+        new liste_historique.HistoriqueTask(this).execute(id, admin);
     }
 
 
@@ -39,8 +43,13 @@ public class liste_historique extends AppCompatActivity {
             String res="";
             try {
                 String id = strings[0];
+                String admin = strings[1];
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet("http://10.0.2.2:8888/historique/idLocal="+id);
+                String url = "http://10.0.2.2:8888/historique/idLocal="+id;
+                if(admin.equals("admin")){
+                    url = "http://10.0.2.2:8888/historiqueAugmente/idLocal="+id;
+                }
+                HttpGet httpGet = new HttpGet(url);
                 httpGet.addHeader("Content-Type", "application/json");
                 HttpResponse httpResponse=  httpClient.execute(httpGet);
                 res = EntityUtils.toString(httpResponse.getEntity());
