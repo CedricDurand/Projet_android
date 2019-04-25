@@ -40,12 +40,15 @@ public class Inscription extends AppCompatActivity {
                 TextView pseudo = findViewById(R.id.pseudo);
                 String string_pseudo = pseudo.getText().toString();
 
-                if(string_pseudo.equals("") || mdp.equals("")) {
+                TextView tel_textview = findViewById(R.id.tel);
+                String tel = tel_textview.getText().toString();
+
+                if(string_pseudo.equals("") || mdp.equals("") || tel.equals("")) {
                     Toast.makeText(Inscription.this, "Remplir tout les champs!", Toast.LENGTH_LONG).show();
                 }
                 else{
                     if(mdp.equals(confirm_mdp)){
-                        new InscriptionTask().execute(string_pseudo, confirm_mdp);
+                        new InscriptionTask().execute(string_pseudo, confirm_mdp, tel);
                     }else{
                         Toast.makeText(Inscription.this, "Mot de passe non identique !", Toast.LENGTH_LONG).show();
                     }
@@ -74,12 +77,13 @@ public class Inscription extends AppCompatActivity {
                 httpPost.addHeader("Content-Type", "application/json");
                 String pseudo = strings[0];
                 String mdp = strings[1];
+                String tel = strings[2];
 
                 Calendar today = Calendar.getInstance();
                 today.add(Calendar.DATE, 0);
                 SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
                 String date = format1.format(today.getTime());
-                StringEntity  entity = new StringEntity("{\"pseudo\":\""+pseudo+"\",\"mdp\":\""+mdp+"\",\"date\":\""+date+"\",\"admin\":\"normal\",\"first_co\":0,\"alerte_mode\":0}");
+                StringEntity  entity = new StringEntity("{\"pseudo\":\""+pseudo+"\",\"mdp\":\""+mdp+"\",\"tel\":\""+tel+"\",\"date\":\""+date+"\",\"admin\":\"normal\",\"first_co\":0,\"alerte_mode\":0}");
                 httpPost.setEntity(entity);
                 HttpResponse httpResponse=  httpClient.execute(httpPost);
                 res = EntityUtils.toString(httpResponse.getEntity());
