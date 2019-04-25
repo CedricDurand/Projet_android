@@ -19,6 +19,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,15 +47,6 @@ public class MainActivity extends AppCompatActivity {
                     new LoginTask().execute(pseudo, mdp);
 
                 }
-            }
-        });
-
-        Button btn_inscription = findViewById(R.id.btn_inscription);
-        btn_inscription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Inscription.class);
-                startActivity(i);
             }
         });
     }

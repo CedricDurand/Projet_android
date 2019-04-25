@@ -73,18 +73,6 @@
                 android:text="@string/login"/>
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_inscription"
-                android:text="@string/inscription"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

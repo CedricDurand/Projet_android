@@ -1,6 +1,7 @@
 package com.example.projet_android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -83,7 +85,13 @@ public class Inscription extends AppCompatActivity {
                 today.add(Calendar.DATE, 0);
                 SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
                 String date = format1.format(today.getTime());
-                StringEntity  entity = new StringEntity("{\"pseudo\":\""+pseudo+"\",\"mdp\":\""+mdp+"\",\"tel\":\""+tel+"\",\"date\":\""+date+"\",\"admin\":\"normal\",\"first_co\":0,\"alerte_mode\":0}");
+                //l'utilisateur augmente
+                SharedPreferences settings = getSharedPreferences("CurrentUser", 0);
+                String myString = settings.getString("currentUser", "");
+                JSONObject userJson = new JSONObject(myString);
+                String augmente = userJson.getString("augmente");
+
+                StringEntity  entity = new StringEntity("{\"pseudo\":\""+pseudo+"\",\"mdp\":\""+mdp+"\",\"tel\":\""+tel+"\",\"date\":\""+date+"\",\"admin\":\"normal\",\"augmente\":"+augmente+",\"first_co\":0,\"alerte_mode\":0}");
                 httpPost.setEntity(entity);
                 HttpResponse httpResponse=  httpClient.execute(httpPost);
                 res = EntityUtils.toString(httpResponse.getEntity());
@@ -91,7 +99,7 @@ public class Inscription extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(getApplicationContext(), "Inscription reussi !", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(Inscription.this, MainActivity.class);
+                            Intent i = new Intent(Inscription.this, PageVisualisation.class);
                             startActivity(i);
                         }
                     });
