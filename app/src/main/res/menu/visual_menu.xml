@@ -7,7 +7,7 @@
         app:showAsAction="never"></item>
     <item android:id="@+id/visual_page"
         android:title="Visualisation"
-        app:showAsAction="always"></item>
+        app:showAsAction="never"></item>
     <item android:id="@+id/type_menu"
         android:title="Par type"
         app:showAsAction="never"></item>

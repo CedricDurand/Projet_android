@@ -38,6 +38,7 @@ public class CategorieLocal extends AppCompatActivity {
                 Intent i = new Intent(CategorieLocal.this, PageVisualisation.class);
                 startActivity(i);
             case R.id.type_menu:
+                //voir pour un retour a l'activité déjà lancé
                 String text = " Vous êtes déjà sur la page des locaux catégorisé";
                 Toast toast = Toast.makeText(getBaseContext(),text,Toast.LENGTH_SHORT);
                 toast.show();
