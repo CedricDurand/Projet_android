@@ -1,6 +1,8 @@
 package com.example.projet_android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -17,17 +27,7 @@ public class EnsembleLocaux extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ensemble_locaux);
-        ListView listLocal = (ListView) findViewById(R.id.ensLocal);
-        ArrayList<Local> l = new ArrayList<>();
-        int id = 1;
-        l.add(new Local("2 place eugènes bataillon 34000 montpellier","Commerce", id));
-        l.add(new Local("3 place eugènes bataillon 34000 montpellier","Habitation", id));
-        l.add(new Local("4 place eugènes bataillon 34000 montpellier","Musée", id));
-        l.add(new Local("5 place eugènes bataillon 34000 montpellier","Commerce", id));
-        l.add(new Local("6 place eugènes bataillon 34000 montpellier","Habitation", id));
-        l.add(new Local("7 place eugènes bataillon 34000 montpellier","Habitation", id));
-        LocalAdapter<Local> adapter = new LocalAdapter<>(this,R.layout.activity_ensemble_locaux,R.id.rowAdresse,l,this);
-        listLocal.setAdapter(adapter);
+        new EnsembleLocaux.EnsembleLocauxTask(this).execute();
     }
 
     @Override
@@ -61,5 +61,53 @@ public class EnsembleLocaux extends AppCompatActivity implements View.OnClickLis
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class EnsembleLocauxTask extends AsyncTask<String,Integer,String> {
+        private EnsembleLocaux activity;
+
+        EnsembleLocauxTask(EnsembleLocaux a){
+            activity=a;
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String res = "";
+            try{
+                SharedPreferences settings = getSharedPreferences("CurrentUser", 0);
+                String myString = settings.getString("currentUser", "");
+                JSONObject userJson = new JSONObject(myString);
+                String id_augmente = userJson.getString("augmente");
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet("http://10.0.2.2:8888/local/idAug="+id_augmente);
+                HttpResponse httpResponse=  httpClient.execute(httpGet);
+                res = EntityUtils.toString(httpResponse.getEntity());
+                if(res.equals("")){
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Erreur serveur !", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else{
+                    JSONArray locaux = new JSONArray(res);
+                    String cat, addr;
+                    int idLocal;
+                    ListView listLocal = (ListView) findViewById(R.id.ensLocal);
+                    ArrayList<Local> l = new ArrayList<>();
+                    for (int i=0; i<locaux.length();i++ ) {
+                        cat = locaux.getJSONObject(i).getString("categorie");
+                        addr= locaux.getJSONObject(i).getString("adresse");
+                        idLocal = Integer.parseInt(locaux.getJSONObject(i).getString("id"));
+                        l.add(new Local(addr,cat, idLocal));
+                    }
+                    LocalAdapter<Local> adapter = new LocalAdapter<>(activity,R.layout.activity_ensemble_locaux,R.id.rowAdresse,l,activity);
+                    listLocal.setAdapter(adapter);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return res;
+        }
     }
 }
