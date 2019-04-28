@@ -88,8 +88,9 @@ public class local_activity extends AppCompatActivity {
                 startActivity(i);
                 return true;
             case R.id.evenement:
-               /* Intent ii = new Intent(local_activity.this, CategorieLocal.class);
-                startActivity(ii);*/
+                Intent i2 = new Intent(local_activity.this, liste_evenement.class);
+                i2.putExtra("id",id_local);
+                startActivity(i2);
                 return true;
             case 1:
                 Intent i3 = new Intent(local_activity.this, liste_historique.class);

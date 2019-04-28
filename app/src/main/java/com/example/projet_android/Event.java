@@ -12,6 +12,12 @@ public class Event {
         date=_date;
     }
 
+    Event(int _id_local, String _log, String _date){
+        id_local= _id_local;
+        log=_log;
+        date=_date;
+    }
+
     public int getId() {
         return id;
     }
