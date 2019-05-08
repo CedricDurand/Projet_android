@@ -1,9 +1,12 @@
 package com.example.projet_android;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,30 +36,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button_login = findViewById(R.id.btn_login);
-        button_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText pseudoEdit = (EditText) findViewById(R.id.input_pseudo);
-                EditText mdpEdit = (EditText) findViewById(R.id.input_mdp);
-                String pseudo = pseudoEdit.getText().toString();
-                String mdp = mdpEdit.getText().toString();
-                if(pseudo.equals("") || mdp.equals("")){
-                    Toast.makeText(MainActivity.this, "Remplir tout les champs !", Toast.LENGTH_SHORT).show();
-                }else {
-                    new LoginTask().execute(pseudo, mdp);
-
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if(networkInfo == null || !networkInfo.isConnected()){ //Si il n'y a pas de connexion internet.
+            Toast.makeText(MainActivity.this, "Pas de connexion internet !", Toast.LENGTH_SHORT).show();
+            Button button_login = findViewById(R.id.btn_login);
+            button_login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MainActivity.this, "Pas de connexion internet !", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-        Button btn = (Button) findViewById(R.id.btn_test);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ii = new Intent(MainActivity.this, PageVisualisation.class);
-                startActivity(ii);
-            }
-        });
+            });
+        }else{
+            Button button_login = findViewById(R.id.btn_login);
+            button_login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText pseudoEdit = (EditText) findViewById(R.id.input_pseudo);
+                    EditText mdpEdit = (EditText) findViewById(R.id.input_mdp);
+                    String pseudo = pseudoEdit.getText().toString();
+                    String mdp = mdpEdit.getText().toString();
+                    if(pseudo.equals("") || mdp.equals("")){
+                        Toast.makeText(MainActivity.this, "Remplir tout les champs !", Toast.LENGTH_SHORT).show();
+                    }else {
+                        new LoginTask().execute(pseudo, mdp);
+
+                    }
+                }
+            });
+            Button btn = (Button) findViewById(R.id.btn_test);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent ii = new Intent(MainActivity.this, PageVisualisation.class);
+                    startActivity(ii);
+                }
+            });
+        }
     }
 
 
