@@ -12,9 +12,11 @@ import java.util.ArrayList;
 public class EventAdapter<T> extends ArrayAdapter {
     LayoutInflater infl;
     private int layout;
+    private View.OnClickListener itemClick;
 
-    public EventAdapter(Activity activit, int lay, int id, ArrayList<Event> items){
+    public EventAdapter(Activity activit, int lay, int id, ArrayList<Event> items, View.OnClickListener onclicklistener){
         super(activit,lay,id,(ArrayList)items);
+        this.itemClick=onclicklistener;
         this.layout=lay;
     }
 
@@ -30,6 +32,7 @@ public class EventAdapter<T> extends ArrayAdapter {
 
             holder.date = (TextView) convertView.findViewById(R.id.date_evenement);
             holder.log = (TextView) convertView.findViewById(R.id.log_evenement);
+            holder.action = (TextView) convertView.findViewById(R.id.action);
 
             convertView.setTag(holder);
         }
@@ -41,7 +44,13 @@ public class EventAdapter<T> extends ArrayAdapter {
             holder.instance = it;
             holder.date.setText("Date : "+it.getDate());
             holder.log.setText("Log : "+it.getLog());
+            if(it.getAction().equals("")){
+                holder.action.setText("Action : en cours !!");
+            }else{
+                holder.action.setText("Action : "+it.getAction());
+            }
         }
+        convertView.setOnClickListener(this.itemClick);
         return convertView;
 
     }
@@ -49,6 +58,7 @@ public class EventAdapter<T> extends ArrayAdapter {
     static class ViewHolder{
         public TextView date;
         public TextView log;
+        public TextView action;
         public Event instance;
     }
 }

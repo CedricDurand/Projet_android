@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".liste_evenement"></activity>
+        <activity android:name=".Alerte_fini"></activity>
+        <activity android:name=".Alerte_en_cours" />
+        <activity android:name=".liste_evenement" />
         <activity android:name=".liste_historique" />
         <activity android:name=".local_activity" />
         <activity android:name=".CategorieLocal" />
