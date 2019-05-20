@@ -20,7 +20,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pseudo"/>
+                android:text="@string/pseudo"
+                android:textColor="@android:color/background_dark" />
         </LinearLayout>
 
         <LinearLayout
@@ -28,11 +29,12 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText android:id="@+id/input_pseudo"
+            <EditText
+                android:id="@+id/input_pseudo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#F20"
-                android:hint="@string/pseudo"/>
+                android:hint="@string/pseudo"
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 
@@ -44,7 +46,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mdp"/>
+                android:text="@string/mdp"
+                android:textColor="@android:color/background_dark" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,12 +55,13 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText android:id="@+id/input_mdp"
+            <EditText
+                android:id="@+id/input_mdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#F20"
+                android:hint="@string/mdp"
                 android:inputType="textPassword"
-                android:hint="@string/mdp" />
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 
@@ -67,10 +71,11 @@
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/btn_login"
-                android:text="@string/login"/>
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:textColor="@android:color/background_dark" />
 
         </LinearLayout>
 
@@ -80,10 +85,11 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btn_test"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_test"
-                android:text="Test"/>
+                android:text="Test"
+                android:textColor="@android:color/background_dark" />
 
         </LinearLayout>
 
