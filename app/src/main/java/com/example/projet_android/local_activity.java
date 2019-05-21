@@ -97,6 +97,7 @@ public class local_activity extends AppCompatActivity {
                 i3.putExtra("id",id_local);
                 i3.putExtra("admin","admin");
                 startActivity(i3);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

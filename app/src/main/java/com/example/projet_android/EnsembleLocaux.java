@@ -42,11 +42,31 @@ public class EnsembleLocaux extends AppCompatActivity implements View.OnClickLis
         startActivity(i);
     }
     public boolean onCreateOptionsMenu(Menu menu){
+        String admin="";
+        try{
+            SharedPreferences settings = getSharedPreferences("CurrentUser", 0);
+            String myString = settings.getString("currentUser", "");
+            JSONObject userJson = new JSONObject(myString);
+            admin = userJson.getString("admin");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         getMenuInflater().inflate(R.menu.visual_menu, menu);
+
+        if(admin.equals("augmente")){
+            menu.add(R.menu.visual_menu,1,Menu.NONE,"Ajouter un utilisateur");
+        }
+
         return true;
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.deco:
+                Intent main = new Intent(EnsembleLocaux.this, MainActivity.class);
+                SharedPreferences settings = getSharedPreferences("CurrentUser", 0);
+                settings.edit().clear().commit();
+                startActivity(main);
+                return true;
             case R.id.all_locaux:
                 String text = " Vous êtes déjà sur la page de l'ensemble des locaux";
                 Toast toast = Toast.makeText(getBaseContext(),text,Toast.LENGTH_SHORT);
@@ -58,6 +78,10 @@ public class EnsembleLocaux extends AppCompatActivity implements View.OnClickLis
             case R.id.type_menu:
                 Intent ii = new Intent(EnsembleLocaux.this, CategorieLocal.class);
                 startActivity(ii);
+                return true;
+            case 1:
+                Intent i3 = new Intent(EnsembleLocaux.this, Inscription.class);
+                startActivity(i3);
                 return true;
         }
         return super.onOptionsItemSelected(item);
