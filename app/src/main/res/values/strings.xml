@@ -16,6 +16,7 @@
     <string name="Categorie">Categorie</string>
     <string name="vid_o">Vidéo</string>
     <string name="tel">Téléphone</string>
+    <string name="simuler">Simuler alerte</string>
     <string-array name="spinner_choice">
         <item>Habitation</item>
         <item>Commerce</item>
