@@ -34,6 +34,8 @@ public class liste_evenement extends AppCompatActivity implements View.OnClickLi
         String action = holder.instance.getAction();
         if(action.equals("")){ // alerte en cours
             Intent i = new Intent(getApplicationContext(), Alerte_en_cours.class);
+            String idLocal = getIntent().getStringExtra("id");
+            i.putExtra("idLocal",idLocal);
             i.putExtra("id",Integer.toString(holder.instance.getId()));
             i.putExtra("log",holder.instance.getLog());
             i.putExtra("date",holder.instance.getDate());
@@ -83,7 +85,8 @@ public class liste_evenement extends AppCompatActivity implements View.OnClickLi
                         date = user.getJSONObject(i).getString("date");
                         log = user.getJSONObject(i).getString("log");
                         action = user.getJSONObject(i).getString("action");
-                        l.add(new Event(Integer.parseInt(id), log, date, action));
+                        String idEvent= user.getJSONObject(i).getString("id");
+                        l.add(new Event(Integer.parseInt(id),Integer.parseInt(idEvent), log, date, action));
                     }
                     System.out.println(l.toString());
                     EventAdapter<Event> adapter = new EventAdapter<>(activity,R.layout.activity_liste_evenement,R.id.date_evenement,l,activity);
