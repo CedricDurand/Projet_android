@@ -23,6 +23,7 @@
         <item>Musee</item>
         <item>Ecole</item>
         <item>Entrepot</item>
+        <item>Bureau</item>
         <item>Institution publique</item>
     </string-array>
 </resources>

@@ -75,6 +75,7 @@ public class EnsembleLocaux extends AppCompatActivity implements View.OnClickLis
             case R.id.visual_page:
                 Intent i = new Intent(EnsembleLocaux.this, PageVisualisation.class);
                 startActivity(i);
+                return true;
             case R.id.type_menu:
                 Intent ii = new Intent(EnsembleLocaux.this, CategorieLocal.class);
                 startActivity(ii);

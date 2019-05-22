@@ -26,6 +26,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -76,19 +77,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            Button btn = (Button) findViewById(R.id.btn_test);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent ii = new Intent(MainActivity.this, PageVisualisation.class);
-                    startActivity(ii);
-                }
-            });
+
         }
     }
 
 
     class LoginTask extends AsyncTask<String,Integer,String>{
+        private JSONArray User;
          @Override
         protected String doInBackground(String... strings) {
             String res="";
@@ -112,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }else {
                     JSONArray  user = new JSONArray(res);
+                    User = user;
                     String strThatDay = user.getJSONObject(0).getString("date");
                     String strFirstCo = user.getJSONObject(0).getString("first_co");
                     if(strFirstCo.equals("0")){
@@ -161,9 +157,20 @@ public class MainActivity extends AppCompatActivity {
                                             startActivity(i);
                                         }
                                     });
-                                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+                                            SharedPreferences settings = getSharedPreferences("CurrentUser", 0);
+                                            SharedPreferences.Editor editor = settings.edit();
+                                            try {
+                                                editor.putString("currentUser", User.get(0).toString());
+                                                editor.commit();
+                                                Intent i = new Intent(MainActivity.this, PageVisualisation.class);
+                                                startActivity(i);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
                                         }
                                     });
                                     AlertDialog dialog = builder.create();
