@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                     builder.setCancelable(true);
                                     builder.setTitle("Alerte");
-                                    builder.setMessage("Votre a expiré ! Changer le maintenant. ");
+                                    builder.setMessage("Votre mot de passe a expiré ! Changer le maintenant. ");
                                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
