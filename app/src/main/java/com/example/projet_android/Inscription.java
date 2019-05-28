@@ -63,7 +63,7 @@ public class Inscription extends AppCompatActivity {
         button_retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Inscription.this, MainActivity.class);
+                Intent i = new Intent(Inscription.this, PageVisualisation.class);
                 startActivity(i);
             }
         });
